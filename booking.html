@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Бронь столика — Варштайнер Форум</title>
+<meta name="description" content="Онлайн-бронирование столика в ресторане Варштайнер Форум: выберите дату, время и стол на схеме зала.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/dark.min.css">
+<link rel="stylesheet" href="assets/style.css?v=7">
+<link rel="stylesheet" href="assets/extras.css?v=7">
+<style>
+.flatpickr-calendar{font-family:var(--body)}
+.flat-holder>input{display:none!important}
+.flatpickr-day.selected,.flatpickr-day.selected:hover{background:var(--red)!important;border-color:var(--red)!important}
+.flatpickr-day.today{border-color:var(--brass)}
+.flatpickr-months .flatpickr-month,.flatpickr-weekdays,span.flatpickr-weekday,.flatpickr-monthDropdown-months{background:transparent!important}
+.flatpickr-innerContainer,.flatpickr-rContainer,.flatpickr-days,.dayContainer{width:100%!important;max-width:none!important;min-width:0!important}
+.flatpickr-day{max-width:none!important;height:56px;line-height:56px;font-size:16px}
+</style>
+</head>
+<body data-nofoot="1">
+<div class="curtain"><b><span>Бронь</span></b></div>
+<main class="wizard">
+  <aside class="wz-side">
+    <div>
+      <div class="mono" style="opacity:.75">06 / Онлайн-бронь</div>
+      <h1 style="margin-top:20px">Ваш<br>стол</h1>
+      <ol class="steps" id="steps"><li class="on"><b>1</b>Дата</li><li><b>2</b>Время и гости</li><li><b>3</b>Стол на схеме</li><li><b>4</b>Контакты</li></ol>
+    </div>
+    <div class="summary-box" id="sumBox">—</div>
+  </aside>
+
+  <section class="wz-main">
+    <!-- 1 -->
+    <div class="step on" data-s="1">
+      <h2 data-split>Когда<br>придёте?</h2><p class="lead">Выберите день — бронируем на 30 дней вперёд.</p>
+      <div class="flat-holder"><input id="cal" type="hidden"></div>
+    </div>
+    <!-- 2 -->
+    <div class="step" data-s="2">
+      <h2>Во сколько<br>и сколько вас?</h2><p class="lead">Серым отмечено уже занятое время.</p>
+      <div class="times" id="times"></div>
+      <div class="note" id="noTimes">😔 На этот день свободного времени уже не осталось.<button class="btn" id="pickOther">Выбрать другой день</button></div>
+      <div class="counter"><button id="gm" aria-label="Меньше">−</button><output id="gn">2</output><button id="gp" aria-label="Больше">+</button><span class="mono" style="color:var(--mute)">гостей</span></div>
+    </div>
+    <!-- 3 -->
+    <div class="step" data-s="3">
+      <h2>Выберите<br>стол</h2><p class="lead">Нажмите на свободный стол. Столы, где не хватает мест, недоступны.</p>
+      <div class="zones" id="zones"><button class="on" data-z="hall">Зал</button><button data-z="veranda">Веранда</button></div>
+      <svg class="plan" id="plan" viewBox="0 0 800 470"></svg>
+      <div class="legend mono"><span><i style="background:#2b2420;border:1px solid #5a4d42"></i>Свободен</span><span><i style="background:#1a1614"></i>Занят</span><span><i style="background:var(--red2)"></i>Ваш стол</span></div>
+      <div class="note" id="bigGroup"><span id="bigTxt"></span><button class="btn" id="asBanquet">Оформить как банкет →</button></div>
+    </div>
+    <!-- 4 -->
+    <div class="step" data-s="4">
+      <h2>Почти<br>готово</h2><p class="lead">Администратор позвонит, чтобы подтвердить бронь.</p>
+      <div class="fields">
+        <div class="fld"><label class="mono" for="fn">Имя</label><input id="fn" autocomplete="name" placeholder="Анна"></div>
+        <div class="fld"><label class="mono" for="fp">Телефон</label><input id="fp" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"></div>
+        <div class="fld full"><label class="mono" for="fc">Пожелания</label><textarea id="fc" placeholder="День рождения, детский стул, трансляция матча…"></textarea></div>
+      </div>
+      <div class="preorder" id="preorder"></div>
+    </div>
+    <!-- done -->
+    <div class="step" data-s="5">
+      <h2>Prost!<br><span class="red">Бронь создана</span></h2><p class="lead">Мы перезвоним в течение 15 минут для подтверждения.</p>
+      <div class="ticket" id="ticket"></div>
+      <div style="display:flex;gap:12px;margin-top:30px;flex-wrap:wrap"><button class="btn" id="ics">Добавить в календарь</button><a href="index.html" class="btn line-b">На главную</a></div>
+      <p class="mono" style="color:var(--mute);margin-top:24px">Демо: заявка никуда не отправляется. В рабочей версии она придёт администратору в Telegram.</p>
+    </div>
+
+    <div class="wz-nav" id="wzNav"><button class="mono" id="back" style="visibility:hidden">← Назад</button><button class="btn" id="nextB">Далее →</button></div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ru.min.js"></script>
+<script src="assets/app.js?v=7"></script>
+<script src="assets/extras.js?v=7"></script>
+<script>
+const S={date:new Date(),time:null,guests:2,zone:'hall',table:null,name:'',phone:''};
+const params=new URLSearchParams(location.search);
+if(params.get('zone')==='veranda')S.zone='veranda';
+if(params.get('zone')==='banquet'){S.guests=12;document.getElementById('fc').value='Банкет / корпоратив — свяжитесь со мной, чтобы обсудить меню.'}
+/* pre-order from «Мой стол» on the menu page */
+const cart=APP.cart.get(),cartN=APP.cart.count(cart);
+if(cartN&&!params.get('zone'))S.guests=cart.guests||2;
+document.getElementById('gn').value=S.guests;
+const fmtD=d=>d.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+/* seeded randomness so «занятость» looks stable */
+const rnd=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return()=>{h=(h*1103515245+12345)|0;return((h>>>16)&0x7fff)/0x7fff}};
+const key=()=>S.date.toDateString();
+
+/* step 1: calendar */
+const today=new Date();today.setHours(0,0,0,0);
+flatpickr('#cal',{inline:true,locale:'ru',minDate:'today',maxDate:new Date(Date.now()+30*864e5),defaultDate:new Date(),appendTo:document.querySelector('.flat-holder'),
+  onChange:d=>{if(d[0]){S.date=d[0];S.time=null;S.table=null;sum()}}});
+
+/* step 2: times */
+function buildTimes(){const box=document.getElementById('times');box.innerHTML='';const r=rnd(key()),now=new Date(),isToday=S.date.toDateString()===now.toDateString();
+  for(let h=12;h<=22;h++)for(const m of[0,30]){if(h===22&&m)continue;const t=`${h}:${m?'30':'00'}`;const b=document.createElement('button');b.textContent=t;
+    const past=isToday&&(h*60+m)<(now.getHours()*60+now.getMinutes()+60);if(past||r()<.18)b.disabled=true;
+    if(t===S.time)b.classList.add('on');
+    b.onclick=()=>{S.time=t;S.table=null;box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');sum()};box.appendChild(b)}
+  document.getElementById('noTimes').classList.toggle('show',!box.querySelector('button:not(:disabled)'));}
+document.getElementById('pickOther').onclick=()=>show(1);
+document.getElementById('gm').onclick=()=>{S.guests=Math.max(1,S.guests-1);document.getElementById('gn').value=S.guests;S.table=null;sum()};
+document.getElementById('gp').onclick=()=>{S.guests=Math.min(30,S.guests+1);document.getElementById('gn').value=S.guests;S.table=null;sum()};
+
+/* step 3: floor plan */
+const PLANS={
+ hall:{deco:`<rect x="20" y="20" width="300" height="46" rx="4" fill="#3a2a1c" stroke="#6b5440"/><text class="lbl" x="170" y="49" text-anchor="middle">БАРНАЯ СТОЙКА</text>
+   <rect x="690" y="410" width="90" height="40" rx="4" fill="none" stroke="#5a4d42" stroke-dasharray="4 4"/><text class="lbl" x="735" y="435" text-anchor="middle">ВХОД</text>
+   <text class="lbl" x="560" y="45">ЗАЛ · НЕВСКИЙ 120</text>`,
+  t:[["1","c",70,140,2],["2","c",70,240,2],["3","c",70,340,2],["4","r",190,130,4],["5","r",190,250,4],["6","r",190,370,4],["7","r",340,130,4],["8","r",340,250,6],
+     ["9","L",520,140,10],["10","r",520,300,4],["11","r",650,140,4],["12","r",650,270,6],["13","c",450,410,2],["14","c",560,410,2]]},
+ veranda:{deco:`<rect x="20" y="430" width="760" height="20" fill="#203a24" stroke="#2f5434"/><text class="lbl" x="400" y="444" text-anchor="middle">ЦВЕТЫ · НЕВСКИЙ ПРОСПЕКТ</text>
+   <rect x="20" y="20" width="760" height="14" fill="#5a1a20"/><text class="lbl" x="400" y="60" text-anchor="middle">НАВЕС</text>`,
+  t:[["В1","c",90,140,2],["В2","c",90,300,2],["В3","r",230,140,4],["В4","r",230,300,4],["В5","r",390,140,4],["В6","r",390,300,4],["В7","L",570,220,8],["В8","c",720,140,2],["В9","c",720,300,2]]}};
+function drawPlan(){const P=PLANS[S.zone],r=rnd(key()+S.time+S.zone);let s=P.deco;
+  P.t.forEach(([id,sh,x,y,seats])=>{const busy=r()<.3||seats<S.guests;const sel=S.table===id;
+    const shape=sh==='c'?`<circle cx="${x}" cy="${y}" r="30"/>`:sh==='r'?`<rect x="${x-46}" y="${y-36}" width="92" height="72" rx="6"/>`:`<rect x="${x-90}" y="${y-50}" width="180" height="100" rx="8"/>`;
+    s+=`<g class="t ${busy?'busy':''} ${sel?'sel':''}" data-id="${id}" data-busy="${busy}">${shape}<text x="${x}" y="${y-2}" text-anchor="middle">№${id}</text><text x="${x}" y="${y+14}" text-anchor="middle" style="font-size:10px;opacity:.7">${seats} мест</text></g>`});
+  const svg=document.getElementById('plan');svg.innerHTML=s;
+  svg.querySelectorAll('.t').forEach(g=>g.onclick=()=>{if(g.dataset.busy==='true')return;S.table=g.dataset.id;drawPlan();sum();
+    gsap.fromTo(svg.querySelector('.t.sel'),{scale:.8,transformOrigin:'center',transformBox:'fill-box'},{scale:1,duration:.6,ease:'elastic.out(1,.4)'})});
+  /* big group: no single table fits → offer a banquet instead of a dead end */
+  const maxSeats=Math.max(...P.t.map(t=>t[4]));const big=S.guests>maxSeats;
+  document.getElementById('bigGroup').classList.toggle('show',big||S.table==='банкет');
+  document.getElementById('bigTxt').textContent=S.table==='банкет'?'✅ Оформляем банкет — администратор подберёт и объединит столы.':`👥 Вас ${S.guests} — это больше самого большого стола (${maxSeats} мест). Объединим столы под банкет.`;
+  document.getElementById('asBanquet').style.display=S.table==='банкет'?'none':'';}
+document.getElementById('asBanquet').onclick=()=>{S.table='банкет';drawPlan();sum();APP.toast('🎉 Оформляем банкет — жмите «Далее»')};
+document.querySelectorAll('#zones button').forEach(b=>{b.classList.toggle('on',b.dataset.z===S.zone);b.onclick=()=>{S.zone=b.dataset.z;S.table=null;document.querySelectorAll('#zones button').forEach(x=>x.classList.toggle('on',x===b));drawPlan();sum()}});
+
+/* phone mask */
+const fp=document.getElementById('fp');
+fp.addEventListener('input',()=>{let d=fp.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7')d='7'+d;d=d.slice(0,11);
+  let o='+7';if(d.length>1)o+=' ('+d.slice(1,4);if(d.length>=4)o+=') '+d.slice(4,7);if(d.length>=7)o+='-'+d.slice(7,9);if(d.length>=9)o+='-'+d.slice(9,11);fp.value=d?o:''});
+
+/* summary */
+const tableTxt=()=>S.table==='банкет'?'банкет':S.table?'№'+S.table:'не выбран';
+function sum(){document.getElementById('sumBox').innerHTML=`Дата — ${fmtD(S.date)}<br>Время — ${S.time||'не выбрано'}<br>Гостей — ${S.guests}<br>Зона — ${S.zone==='hall'?'зал':'веранда'}<br>Стол — ${tableTxt()}`+(cartN?`<br>Предзаказ — ${APP.rub(APP.cart.total(cart))}`:'')}
+sum();
+if(cartN){const po=document.getElementById('preorder');po.classList.add('show');
+  po.innerHTML=`<span class="mono brass">🍽 Предзаказ из «Моего стола»</span><ul>${Object.values(cart.items).map(i=>`<li>${i.n} × ${i.q} — ${APP.rub(i.p*i.q)}</li>`).join('')}</ul><b class="disp" style="font-size:22px">${APP.rub(APP.cart.total(cart))}</b> <span class="mono" style="color:var(--mute)">· кухня начнёт готовить к вашему приходу</span>`}
+
+/* wizard nav */
+let cur=1,moving=false;const steps=[...document.querySelectorAll('.step')],lis=[...document.querySelectorAll('#steps li')];
+function show(n){if(moving)return;moving=true;const from=steps.find(s=>s.classList.contains('on'));
+  const run=()=>{moving=false;steps.forEach(s=>s.classList.toggle('on',+s.dataset.s===n));cur=n;
+    lis.forEach((l,i)=>{l.classList.toggle('on',i+1===n);l.classList.toggle('done',i+1<n)});
+    document.getElementById('back').style.visibility=n>1&&n<5?'visible':'hidden';
+    document.getElementById('wzNav').style.display=n===5?'none':'flex';
+    document.getElementById('nextB').innerHTML=n===4?'Забронировать →':'Далее →';
+    if(n===2)buildTimes();if(n===3)drawPlan();
+    const to=steps[n-1];if(!APP.reduce)gsap.fromTo(to.children,{y:40,opacity:0},{y:0,opacity:1,stagger:.06,duration:.8,ease:'expo.out'});
+    APP.lenis?APP.lenis.scrollTo(0,{immediate:true}):scrollTo(0,0)};
+  if(from&&!APP.reduce)gsap.to(from.children,{y:-30,opacity:0,stagger:.03,duration:.3,onComplete:run});else run()}
+function shake(el){gsap.fromTo(el,{x:-10},{x:0,duration:.5,ease:'elastic.out(1,.3)'})}
+document.getElementById('nextB').onclick=()=>{
+  if(moving)return;
+  if(cur===2&&!S.time){shake(document.getElementById('times'));APP.toast('Выберите время ⏰');return}
+  if(cur===3&&!S.table){shake(document.getElementById('plan'));APP.toast('Нажмите на свободный стол на схеме 🪑');return}
+  if(cur===4){const fn=document.getElementById('fn');let ok=true;
+    [[fn,!fn.value.trim()],[fp,fp.value.replace(/\D/g,'').length<11]].forEach(([el,bad])=>{el.classList.toggle('bad',bad);if(bad){ok=false;shake(el)}});
+    if(!ok){APP.toast('Проверьте имя и телефон ☎️');return}S.name=fn.value.trim();S.phone=fp.value;ticket();if(cartN)APP.cart.set({items:{},guests:2});setTimeout(()=>APP.prost(40),500)}
+  show(cur+1)};
+document.getElementById('back').onclick=()=>show(cur-1);
+
+/* ticket + calendar file */
+let code='';
+function ticket(){code='WF-'+Math.random().toString(36).slice(2,6).toUpperCase();
+  const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  document.getElementById('ticket').innerHTML=`<div class="l"><span class="mono" style="color:var(--red)">Варштайнер Форум · Невский 120</span><h3 style="margin-top:12px">${esc(S.name)}</h3>
+  <dl><dt>Дата</dt><dd>${fmtD(S.date)}</dd><dt>Время</dt><dd>${S.time}</dd><dt>Гостей</dt><dd>${S.guests}</dd><dt>Стол</dt><dd>${tableTxt()} · ${S.zone==='hall'?'зал':'веранда'}</dd>${cartN?`<dt>Предзаказ</dt><dd>${APP.rub(APP.cart.total(cart))}</dd>`:''}<dt>Телефон</dt><dd>${esc(S.phone)}</dd></dl></div>
+  <div class="r"><span class="mono">Бронь</span><span class="code">${code}</span><span class="mono">Prost!</span></div>`}
+document.getElementById('ics').onclick=()=>{const [h,m]=S.time.split(':').map(Number);const d=new Date(S.date);d.setHours(h,m,0,0);const e=new Date(d.getTime()+2*36e5);
+  const f=x=>x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Warsteiner Forum//RU','BEGIN:VEVENT','UID:'+code+'@warsteiner-forum','DTSTAMP:'+f(new Date()),'DTSTART:'+f(d),'DTEND:'+f(e),
+    'SUMMARY:Ужин в Варштайнер Форум ('+code+')','LOCATION:Невский проспект\\, 120\\, Санкт-Петербург','DESCRIPTION:Стол '+tableTxt()+'\\, гостей: '+S.guests,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='bron-warsteiner.ics';a.click()};
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Меню — Варштайнер Форум</title>
+<meta name="description" content="Меню ресторана Варштайнер Форум: немецкие колбаски, рулька, гриль Josper, пиво и домашние настойки.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=7">
+<link rel="stylesheet" href="assets/extras.css?v=7">
+</head>
+<body class="paper">
+<div class="curtain"><b><span>Меню</span></b></div>
+<main>
+  <header class="pagehead">
+    <div><div class="crumbs mono"><span>02</span><span>/</span><span>Меню</span></div>
+      <h1 data-split>Меню<br><span class="red">Карта</span></h1></div>
+    <div class="meta mono"><span>Средний чек 800–1600 ₽</span><span>Бизнес-ланч в будни</span><span>Обновлено: сентябрь</span></div>
+  </header>
+  <nav class="mcats" id="mcats"><label class="msearch"><span>🔎</span><input id="q" type="search" placeholder="Найти блюдо…" aria-label="Поиск по меню"></label></nav>
+  <div id="menuBody"></div>
+  <div class="nores" id="nores">Ничего не нашли 🥨<br><span class="mono" style="font-size:12px;color:var(--red)">Попробуйте «колбаски» или «пиво»</span></div>
+</main>
+<div class="hover-img" id="hov"><img alt=""></div>
+<div class="tray" id="tray">
+  <div class="tray-bar">
+    <div class="grow" id="trayToggle" title="Показать список"><b id="tTotal">0 ₽</b><small id="tInfo">Мой стол · 0 позиций ▴</small></div>
+    <div class="mini"><span class="lbl">гостей</span><button id="tgm" aria-label="Меньше гостей">−</button><span id="tg">2</span><button id="tgp" aria-label="Больше гостей">+</button></div>
+    <a href="booking.html" class="btn" id="toBook" data-cursor="Бронь">В бронь →</a>
+  </div>
+  <div class="tray-list" id="tList"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+const MENU=[
+ ["josper","Гриль Josper","steak",[
+  ["Стейк стриплойн","250 г","Стейк с выраженным мясным вкусом, соус на выбор",2100,"steak"],
+  ["Бифштекс из мраморной говядины","175 г","Печёный картофель, маринованный огурец",890,"hero"],
+  ["Томагавк из свиной корейки","220 г","Свиная корейка на кости",890,"steak"],
+  ["Свиная шея на гриле","200 г","Сочная свиная шея с ароматом гриля",720,"hero"],
+  ["Ассорти шашлыков","120 г","Говяжья вырезка, свиная шея и куриное бедро",1450,"steak"],
+  ["Стейк из лосося","140 г","Лосось на гриле с соусом",1430,"salad"],
+  ["Судак на гриле","140 г","Нежный судак с ароматом гриля",750,"salad"],
+  ["Овощи на гриле","350 г","Печёные овощи, зелёное масло и лаваш",450,"salad"]]],
+ ["hot","Горячее","feast",[
+  ["Свиная рулька «Айсбан»","750 г","Тушёная капуста, печёный картофель, карамелизированное яблоко и три соуса",1550,"feast"],
+  ["Свиные рёбра BBQ","200 г","Соус BBQ, печёный картофель и мясной соус",780,"ribs"],
+  ["Шницель «Варштайнер»","180 г","Фирменный шницель с соусом тоннато",650,"feast"],
+  ["Говяжья вырезка по-строгановски","180 г","Нежная вырезка и картофельное пюре",1250,"steak"],
+  ["Корюшка жареная","200 г","С классическим соусом тартар",690,"platter"],
+  ["Пельмени из оленины","250 г","Сметана; с бульоном или без",650,"feast"],
+  ["Паста карбонара","300 г","Сливочно-мясной вкус",530,"salad"]]],
+ ["sausages","Колбаски","feast",[
+  ["«Баварская» из свинины","180 г","Гарнир и соус на выбор",650,"feast"],
+  ["«Северная» из оленины","110 г","Гарнир и соус на выбор",690,"feast"],
+  ["«Егерская» из куриного филе","110 г","Гарнир и соус на выбор",590,"feast"],
+  ["«Швейцарская» из говядины с сыром","110 г","Гарнир и соус на выбор",560,"feast"],
+  ["Ассорти немецких колбасок","400 г","«Баварская», «Егерская», «Швейцарская», капуста, картофель",1490,"feast"],
+  ["Большое мясное блюдо","на компанию","Рулька «Айсбан», пять колбасок, печёный картофель, капуста и соусы",3950,"friends"]]],
+ ["snacks","Закуски","platter",[
+  ["Большая пивная тарелка","750 г","Колбаска, гренки, джерки, куриные чипсы, кольца, фри и три соуса",1700,"platter"],
+  ["Тарелка к вину","150 г","Сыровяленая колбаса, выдержанный сыр, оливки и гриссини",590,"platter"],
+  ["Сырные шарики","10 шт.","Тягучая середина и брусничный соус",600,"ribs"],
+  ["Жареный сулугуни","150 г","С брусничным соусом",490,"platter"],
+  ["Мясная тарелка","175 г","Буженина, говяжий язык, копчёная грудка, хрен и горчица",690,"platter"],
+  ["Ассорти из трёх видов сала","225 г","Ржаной хлеб, зелёный лук и горчица",570,"platter"],
+  ["Соленья","250 г","Квашеная капуста, огурцы и солёные грузди",610,"salad"]]],
+ ["salads","Салаты и супы","salad",[
+  ["Салат с говяжьей вырезкой","220 г","Вырезка и баклажаны",710,"salad"],
+  ["Мясной салат «Варштайнер»","250 г","Фирменный сытный салат",670,"salad"],
+  ["Салат с лососем, креветками и авокадо","240 г","Слабосолёный лосось",780,"salad"],
+  ["Борщ","350 г","Сало, ржаной хлеб, зелёный лук и сметана",550,"feast"],
+  ["Солянка мясная","350 г","Густая, с насыщенным вкусом",550,"feast"],
+  ["Сливочная уха","350 г","Лосось и судак в сливочном бульоне",650,"salad"]]],
+ ["beer","Пиво и сидр","glasses",[
+  ["Warsteiner Premium","0,5 л","Германия, 4,8% · пилснер по Закону о чистоте пива 1516 года",690,"sign"],
+  ["Фестхаус Вайсбир","0,5 л","Пшеничное нефильтрованное, баварский стиль",510,"glasses"],
+  ["Балтика Хеллес","0,5 л","Мягкий светлый хеллес, 14 IBU",410,"glasses"],
+  ["«Синяя Борода» Дюббель","0,75 л","Василеостровская пивоварня, 8%",790,"bartender"],
+  ["«Чехов» вишнёвый эль","0,75 л","Василеостровская пивоварня, 7,3%",790,"bartender"],
+  ["«Атомная прачечная» IPA","0,5 л","Пивоварня «Джоус», 101 IBU",650,"bartender"],
+  ["Сидр яблочный","0,75 л","Василеостровская пивоварня, 4,7%",650,"lemonade"]]],
+ ["desserts","Десерты","margarita",[
+  ["Чизкейк Сан-Себастьян","150 г","Солёная карамель",490,"margarita"],
+  ["Шоколадный фондан","80 г","Тёплый, с шариком мороженого",470,"margarita"],
+  ["Яблочный штрудель","130 г","Тёплый, с шариком мороженого",480,"margarita"]]]
+];
+const nav=document.getElementById('mcats'),bodyEl=document.getElementById('menuBody');
+const navSearch=nav.firstElementChild;
+MENU.forEach(([id,title,img,items],i)=>{
+  nav.insertAdjacentHTML('beforeend',`<a href="#${id}">${title}</a>`);
+  bodyEl.insertAdjacentHTML('beforeend',`<section class="msec" id="${id}"><h2><small>${String(i+1).padStart(2,'0')} — ${items.length} позиций</small>${title}</h2>
+   <div>${items.map(([n,w,d,p,im])=>`<div class="mrow" data-img="${im}" data-n="${n}" data-p="${p}"><h3>${n}<span class="w">${w}</span></h3><span class="pr">${p} ₽</span><button class="add" aria-label="Добавить «${n}» в мой стол" title="Добавить в «Мой стол»">+</button><p>${d}</p></div>`).join('')}</div></section>`);
+});
+</script>
+<script src="assets/app.js?v=7"></script>
+<script src="assets/extras.js?v=7"></script>
+<script>
+/* category links scroll + active state */
+const links=[...document.querySelectorAll('#mcats a')];
+links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));APP.lenis?APP.lenis.scrollTo(t,{offset:-120}):t.scrollIntoView()}));
+document.querySelectorAll('.msec').forEach(s=>ScrollTrigger.create({trigger:s,start:'top 50%',end:'bottom 50%',onToggle:st=>{if(st.isActive){links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+s.id));const on=links.find(l=>l.classList.contains('on'));on&&on.scrollIntoView({inline:'center',block:'nearest'})}}}));
+if(location.hash){const t=document.querySelector(location.hash);t&&setTimeout(()=>APP.lenis?APP.lenis.scrollTo(t,{offset:-120,immediate:true}):t.scrollIntoView(),300)}
+/* rows reveal */
+if(!APP.reduce)document.querySelectorAll('.msec').forEach(s=>gsap.from(s.querySelectorAll('.mrow'),{y:30,opacity:0,stagger:.05,duration:.8,ease:'expo.out',scrollTrigger:{trigger:s,start:'top 75%'}}));
+/* cursor-following photo */
+const hov=document.getElementById('hov'),hi=hov.querySelector('img');
+const xTo=gsap.quickTo(hov,'x',{duration:.6,ease:'power3'}),yTo=gsap.quickTo(hov,'y',{duration:.6,ease:'power3'});let lx=0;
+addEventListener('pointermove',e=>{xTo(e.clientX+30);yTo(e.clientY-170);gsap.to(hov,{rotate:gsap.utils.clamp(-12,12,(e.clientX-lx)*.6),duration:.6});lx=e.clientX});
+document.querySelectorAll('.mrow').forEach(r=>{
+  r.addEventListener('mouseenter',()=>{hi.src='img/'+r.dataset.img+'.jpg';gsap.to(hov,{opacity:1,scale:1,duration:.5,ease:'expo.out'})});
+  r.addEventListener('mouseleave',()=>gsap.to(hov,{opacity:0,scale:.6,duration:.4}));
+});
+
+/* ---------- search ---------- */
+const q=document.getElementById('q'),nores=document.getElementById('nores');
+const norm=s=>s.toLowerCase().replace(/ё/g,'е');
+q.addEventListener('input',()=>{const v=norm(q.value.trim());let any=false;
+  document.querySelectorAll('.msec').forEach(sec=>{let vis=0;const secHit=v&&norm(sec.querySelector('h2').textContent).includes(v);
+    sec.querySelectorAll('.mrow').forEach(r=>{const hit=!v||secHit||norm(r.textContent).includes(v);r.style.display=hit?'':'none';r.style.opacity=1;r.style.transform='none';if(hit)vis++});
+    sec.style.display=vis?'':'none';if(vis)any=true});
+  nores.style.display=any?'none':'block';ScrollTrigger.refresh()});
+q.addEventListener('keydown',e=>{if(e.key==='Enter'){const f=document.querySelector('.mrow:not([style*="none"])');f&&(APP.lenis?APP.lenis.scrollTo(f,{offset:-160}):f.scrollIntoView({block:'center'}))}});
+
+/* ---------- «Мой стол» ---------- */
+const tray=document.getElementById('tray');
+function render(){const c=APP.cart.get(),n=APP.cart.count(c),t=APP.cart.total(c);
+  document.getElementById('tTotal').textContent=APP.rub(t);
+  const per=Math.ceil(t/Math.max(c.guests,1));
+  document.getElementById('tInfo').textContent=`Мой стол · ${n} ${n%10===1&&n%100!==11?'позиция':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?'позиции':'позиций'} · по ${APP.rub(per)} на гостя ${tray.classList.contains('open')?'▾':'▴'}`;
+  document.getElementById('tg').textContent=c.guests;
+  tray.classList.toggle('show',n>0);document.body.classList.toggle('has-tray',n>0);if(!n)tray.classList.remove('open');
+  document.getElementById('tList').innerHTML=Object.entries(c.items).map(([k,i])=>`<div class="ti"><span>${i.n}</span><button data-k="${k}" data-d="-1" aria-label="Убрать одну">−</button><span class="q">${i.q}</span><button data-k="${k}" data-d="1" aria-label="Добавить ещё">+</button><b>${APP.rub(i.p*i.q)}</b></div>`).join('')+(n?'<button class="clear" id="tClear">Очистить стол</button>':'');
+  document.querySelectorAll('.mrow').forEach(r=>{const it=c.items[r.dataset.n],b=r.querySelector('.add');b.classList.toggle('in',!!it);b.textContent=it?'×'+it.q:'+'});}
+function change(name,price,d){const c=APP.cart.get();const it=c.items[name]||{n:name,p:+price,q:0};it.q+=d;if(it.q<=0)delete c.items[name];else c.items[name]=it;APP.cart.set(c);render()}
+document.querySelectorAll('.mrow .add').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const r=b.closest('.mrow');
+  change(r.dataset.n,r.dataset.p,1);
+  /* little dot flies into the tray */
+  const a=b.getBoundingClientRect(),t=tray.getBoundingClientRect(),dot=document.createElement('span');dot.className='fly';document.body.appendChild(dot);
+  gsap.fromTo(dot,{x:a.left+a.width/2,y:a.top+a.height/2},{x:t.left+60,y:Math.min(t.top+30,innerHeight-40),duration:.7,ease:'power2.in',onComplete:()=>{dot.remove();gsap.fromTo('#tTotal',{scale:1.25},{scale:1,duration:.5,ease:'back.out(3)'})}});
+  const c=APP.cart.get();if(APP.cart.count(c)===1)APP.toast('🍽 Добавили в «Мой стол» — внизу видно сумму и сколько выйдет на гостя');}));
+document.getElementById('tList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.id==='tClear'){APP.cart.set({items:{},guests:APP.cart.get().guests});render();APP.toast('Стол очищен');return}
+  const c=APP.cart.get(),it=c.items[b.dataset.k];if(it)change(b.dataset.k,it.p,+b.dataset.d)});
+document.getElementById('trayToggle').onclick=()=>{tray.classList.toggle('open');render()};
+document.getElementById('tgm').onclick=()=>{const c=APP.cart.get();c.guests=Math.max(1,c.guests-1);APP.cart.set(c);render()};
+document.getElementById('tgp').onclick=()=>{const c=APP.cart.get();c.guests=Math.min(30,c.guests+1);APP.cart.set(c);render()};
+render();
+</script>
+</body>
+</html>

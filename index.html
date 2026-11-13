@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Варштайнер Форум — ресторан на Невском, 120</title>
+<meta name="description" content="Немецкая кухня, гриль Josper, Warsteiner и домашние настойки. Невский проспект, 120, Санкт-Петербург.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=7">
+<link rel="stylesheet" href="assets/extras.css?v=7">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body data-splash="1">
+<div class="curtain"><b><span>Варштайнер</span></b></div>
+
+<!-- ===== 3D SPLASH ===== -->
+<div class="splash" id="splash">
+  <canvas id="glass3d"></canvas>
+  <div class="sp-ui">
+    <div class="sp-row mono"><span>Варштайнер Форум · Невский 120</span><button class="sp-skip mono" id="skip">Пропустить →</button></div>
+    <div class="sp-row">
+      <div><div class="mono" style="color:var(--mute);margin-bottom:10px" id="spState">Наливаем…</div><div class="sp-count" id="count">0</div></div>
+      <div class="sp-title" id="spTitle">Немецкая<br>кухня<br><span style="color:var(--red2)">с 12:00</span></div>
+    </div>
+  </div>
+  <button class="sp-enter" id="enter" data-cursor="Prost!">Войти в ресторан</button>
+</div>
+
+<main>
+  <!-- poster -->
+  <section class="poster">
+    <div class="poster-top mono"><span>Ресторан · Бар · Гриль</span><span>Ежедневно с 12:00</span><span>59.93° N — 30.36° E</span></div>
+    <div style="align-self:center;width:100%">
+      <div class="poster-word fit" id="pw1">Варштайнер</div>
+      <div class="poster-word two fit" id="pw2">Форум</div>
+    </div>
+    <div class="poster-bot">
+      <div><b>4,9 ★</b><span>1382 оценки на Яндексе</span></div>
+      <div><b>Josper</b><span>гриль на углях</span></div>
+      <div><b>12</b><span>домашних настоек</span></div>
+      <div><b>№ 120</b><span>Невский проспект</span></div>
+    </div>
+  </section>
+
+  <!-- intro -->
+  <section class="intro">
+    <div>
+      <p class="mono" style="color:var(--mute);margin-bottom:30px">(01) — О нас</p>
+      <p class="big" data-split>Тёмное дерево, латунь и шахматный пол. Здесь пьют <em>свежий Warsteiner,</em> едят рульку размером с тарелку и задерживаются дольше, чем планировали.</p>
+    </div>
+    <div class="side">
+      <div class="ph"><img src="img/mural.jpg" alt="Зал с панорамой старого Петербурга" data-parallax="8"></div>
+      <a href="menu.html" class="btn up" data-cursor="Меню">Открыть меню →</a>
+    </div>
+  </section>
+
+  <div class="ticker"><div id="tk"><span>Рулька «Айсбан»</span><span>Warsteiner Premium</span><span>Колбаски из оленины</span><span>Стейк стриплойн</span><span>Сет из 12 настоек</span><span>Летняя веранда</span></div></div>
+
+  <!-- horizontal chapters -->
+  <section class="chapters" id="chapters">
+    <div class="ch-track" id="track">
+      <article class="ch"><div class="txt"><div class="num">01</div><div><span class="mono brass">Кухня</span><h2>Немецкая<br>классика</h2><p>Рулька «Айсбан» на 750 граммов, баварские колбаски, шницель и домашние пельмени из оленины. Порции — щедрые, как положено.</p><a href="menu.html" class="more mono" data-cursor="Меню">Смотреть меню →</a></div></div>
+        <div class="img"><img src="img/feast.jpg" alt=""><span class="lbl mono">Рулька · 1550 ₽</span></div></article>
+      <article class="ch"><div class="txt"><div class="num">02</div><div><span class="mono brass">Гриль</span><h2>Огонь<br>Josper</h2><p>Стриплойн, томагавк из свиной корейки, шашлыки и рыба — всё на углях в печи-гриле Josper.</p><a href="menu.html#josper" class="more mono" data-cursor="Гриль">Гриль-меню →</a></div></div>
+        <div class="img"><img src="img/hero.jpg" alt=""><span class="lbl mono">Стриплойн · 2100 ₽</span></div></article>
+      <article class="ch"><div class="txt"><div class="num">03</div><div><span class="mono brass">Бар</span><h2>Пиво<br>и настойки</h2><p>Warsteiner, крафт от Василеостровской пивоварни и двенадцать домашних настоек — от облепихи до сливочной ириски.</p><a href="bar.html" class="more mono" data-cursor="Бар">В бар →</a></div></div>
+        <div class="img"><img src="img/aperol.jpg" alt=""><span class="lbl mono">Сет настоек · 2500 ₽</span></div></article>
+      <article class="ch"><div class="txt"><div class="num">04</div><div><span class="mono brass">Сезон</span><h2>Летняя<br>веранда</h2><p>Зелень, цветы и Невский перед глазами. Вечером — уличные музыканты, днём — бизнес-ланч на воздухе.</p><a href="events.html" class="more mono" data-cursor="Смотреть">Подробнее →</a></div></div>
+        <div class="img"><img src="img/veranda.jpg" alt=""><span class="lbl mono">Веранда</span></div></article>
+      <article class="ch"><div class="txt"><div class="num">05</div><div><span class="mono brass">События</span><h2>Банкеты<br>и матчи</h2><p>Дни рождения, корпоративы и трансляции. Большое мясное блюдо на компанию и пивные сеты.</p><a href="events.html" class="more mono" data-cursor="События">Все форматы →</a></div></div>
+        <div class="img"><img src="img/friends.jpg" alt=""><span class="lbl mono">до 80 гостей</span></div></article>
+    </div>
+    <div class="ch-progress"><i id="chProg"></i></div>
+  </section>
+
+  <!-- scores -->
+  <section class="scores">
+    <div class="score up">4,9<sup>/5</sup></div>
+    <div>
+      <p class="mono" style="color:var(--mute)">(02) — Гости о нас · Яндекс Карты · Хорошее место 2026</p>
+      <div class="meters" id="meters" style="margin-top:20px">
+        <div class="meter"><span>Атмосфера</span><div class="bar"><i data-w="99"></i></div><b>99%</b></div>
+        <div class="meter"><span>Еда</span><div class="bar"><i data-w="93"></i></div><b>93%</b></div>
+        <div class="meter"><span>Персонал</span><div class="bar"><i data-w="92"></i></div><b>92%</b></div>
+        <div class="meter"><span>Ожидание</span><div class="bar"><i data-w="85"></i></div><b>85%</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <img src="img/evening.jpg" alt="" data-parallax="12">
+    <div class="in">
+      <span class="mono">Невский, 120 · 3 минуты от метро</span>
+      <h2 data-split>Столик<br>ждёт вас</h2>
+      <a href="booking.html" class="btn light" data-cursor="Бронь">Выбрать стол на схеме →</a>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/app.js?v=7"></script>
+<script src="assets/extras.js?v=7"></script>
+<script>
+const tk=document.getElementById('tk');tk.innerHTML+=tk.innerHTML;
+/* horizontal chapters */
+const track=document.getElementById('track');
+/* desktop: pinned horizontal chapters that follow the wheel directly (no catch-up lag);
+   phones/tablets and reduced motion: plain vertical list — nothing gets pinned */
+ScrollTrigger.matchMedia({
+  '(min-width:901px) and (prefers-reduced-motion:no-preference)':()=>{
+    const hs=gsap.to(track,{x:()=>-(track.scrollWidth-innerWidth),ease:'none',
+      scrollTrigger:{trigger:'#chapters',pin:true,scrub:.25,end:()=>'+='+(track.scrollWidth-innerWidth)*.8,invalidateOnRefresh:true,
+      onUpdate:s=>document.getElementById('chProg').style.width=s.progress*100+'%'}});
+    track.querySelectorAll('.img img').forEach(img=>gsap.fromTo(img,{xPercent:-6},{xPercent:6,ease:'none',scrollTrigger:{trigger:img.closest('.ch'),containerAnimation:hs,start:'left right',end:'right left',scrub:true}}));
+  },
+  '(max-width:900px), (prefers-reduced-motion:reduce)':()=>{document.getElementById('chapters').classList.add('stacked')}
+});
+/* meters */
+ScrollTrigger.create({trigger:'#meters',start:'top 80%',once:true,onEnter:()=>document.querySelectorAll('#meters i').forEach((i,k)=>gsap.to(i,{width:i.dataset.w+'%',duration:1.6,delay:k*.12,ease:'expo.out'}))});
+
+/* poster intro after splash */
+function posterIn(){if(APP.reduce)return;gsap.from(['#pw1','#pw2'],{yPercent:60,opacity:0,duration:1.6,stagger:.15,ease:'expo.out'});
+  gsap.from('.poster-bot>div,.poster-top span',{y:30,opacity:0,duration:1,stagger:.06,delay:.4,ease:'expo.out'})}
+window.posterIn=posterIn;
+
+/* splash: show once per session (or with ?intro) */
+const splash=document.getElementById('splash');
+let seen=false;try{seen=sessionStorage.getItem('wf_intro')==='1'}catch(e){}
+if(seen&&!location.search.includes('intro')){splash.remove();APP.curtainOut();posterIn()}
+else{APP.lock('splash',true);document.querySelector('.curtain').style.visibility='hidden';
+  window.closeSplash=function(){try{sessionStorage.setItem('wf_intro','1')}catch(e){}
+    gsap.to(splash,{opacity:0,duration:.9,ease:'power2.inOut',onComplete:()=>{splash.remove();window.SPLASH_DONE=true}});
+    APP.lock('splash',false);posterIn()};
+  document.getElementById('skip').onclick=()=>window.closeSplash();
+  /* fallback if 3D fails to load */
+  setTimeout(()=>{if(!window.SPLASH_OK){document.getElementById('count').textContent='100';const b=document.getElementById('enter');b.style.opacity=1;b.style.visibility='visible';b.onclick=()=>window.closeSplash()}},5000);
+}
+</script>
+
+<!-- 3D glass of beer -->
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const splash=document.getElementById('splash');
+if(splash&&splash.isConnected){
+  window.SPLASH_OK=true;
+  const canvas=document.getElementById('glass3d');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setClearColor(0x070504,1);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;
+  renderer.localClippingEnabled=true;
+  const scene=new THREE.Scene();
+  const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
+  const cam=new THREE.PerspectiveCamera(32,1,.05,100);cam.position.set(0,.6,8.2);
+  const g=new THREE.Group();scene.add(g);g.position.y=-1.5;
+
+  const V=(x,y)=>new THREE.Vector2(x,y);
+  // glass profile (outer up, inner down)
+  const glassPts=[V(.001,0),V(.55,0),V(.6,.05),V(.62,.3),V(.66,1.2),V(.78,2.1),V(.84,2.6),V(.85,2.92),V(.81,2.92),V(.8,2.6),V(.74,2.1),V(.62,1.2),V(.58,.42),V(.5,.32),V(.001,.32)];
+  const glass=new THREE.Mesh(new THREE.LatheGeometry(glassPts,128),new THREE.MeshPhysicalMaterial({color:0xffffff,transmission:1,roughness:.02,thickness:.25,ior:1.45,metalness:0,envMapIntensity:.55,specularIntensity:1,attenuationColor:new THREE.Color(0xfff1d8),attenuationDistance:4}));
+  window.__wf={get tl(){return tl}};
+  // beer profile
+  const beerProf=[[.001,.33],[.56,.33],[.6,.42],[.61,1.2],[.73,2.1],[.79,2.6],[.8,2.9]];
+  const rAt=y=>{for(let i=1;i<beerProf.length;i++){const[a,b]=[beerProf[i-1],beerProf[i]];if(y<=b[1]){const t=(y-a[1])/(b[1]-a[1]||1);return a[0]+(b[0]-a[0])*t}}return .8};
+  const clip=new THREE.Plane(new THREE.Vector3(0,-1,0),0);
+  const beerMat=new THREE.MeshPhysicalMaterial({color:0xd9861a,emissive:0x5a2a00,emissiveIntensity:.55,roughness:.12,clearcoat:1,clearcoatRoughness:.1,clippingPlanes:[clip],side:THREE.DoubleSide});
+  const beer=new THREE.Mesh(new THREE.LatheGeometry(beerProf.map(p=>V(p[0]*.985,p[1])),128),beerMat);
+  // beer surface + foam
+  const surf=new THREE.Mesh(new THREE.CircleGeometry(1,96),new THREE.MeshStandardMaterial({color:0xf2b347,emissive:0x6a3500,roughness:.3}));surf.rotation.x=-Math.PI/2;
+  const foamGeo=new THREE.SphereGeometry(1,96,48,0,Math.PI*2,0,Math.PI/2);
+  const fp=foamGeo.attributes.position;for(let i=0;i<fp.count;i++){const x=fp.getX(i),y=fp.getY(i),z=fp.getZ(i);const n=1+.06*Math.sin(x*9)*Math.sin(z*8)+.04*Math.sin(y*14+x*6);fp.setXYZ(i,x*n,y*n,z*n)}foamGeo.computeVertexNormals();
+  const foam=new THREE.Mesh(foamGeo,new THREE.MeshPhysicalMaterial({color:0xfff4dc,roughness:.85,sheen:1,sheenColor:new THREE.Color(0xffe2a8),sheenRoughness:.6}));
+  // fresnel rim on the glass so its edges catch light
+  const rimMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+    vertexShader:`varying vec3 vN;varying vec3 vV;void main(){vec4 mv=modelViewMatrix*vec4(position,1.);vN=normalize(normalMatrix*normal);vV=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`varying vec3 vN;varying vec3 vV;void main(){float f=pow(1.-abs(dot(vN,vV)),3.);gl_FragColor=vec4(vec3(1.,.9,.72)*f*1.3,f);}`});
+  const rimMesh=new THREE.Mesh(new THREE.LatheGeometry(glassPts.slice(0,8),128),rimMat);rimMesh.scale.setScalar(1.004);
+  const lip=new THREE.Mesh(new THREE.TorusGeometry(.83,.018,16,160),new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0,transmission:.6,envMapIntensity:2}));lip.rotation.x=Math.PI/2;lip.position.y=2.92;
+  g.add(beer,surf,foam,glass,rimMesh,lip);
+  // warm glow behind + floor shadow
+  const gc=document.createElement('canvas');gc.width=gc.height=256;const gx=gc.getContext('2d');const grd=gx.createRadialGradient(128,128,0,128,128,128);
+  grd.addColorStop(0,'rgba(217,134,26,.55)');grd.addColorStop(.45,'rgba(179,32,44,.18)');grd.addColorStop(1,'rgba(0,0,0,0)');gx.fillStyle=grd;gx.fillRect(0,0,256,256);
+  const glow=new THREE.Mesh(new THREE.PlaneGeometry(9,9),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(gc),transparent:true,depthWrite:false}));glow.position.set(0,0,-3);scene.add(glow);
+  const sh=new THREE.Mesh(new THREE.CircleGeometry(1.4,64),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture((()=>{const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');const r=x.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'rgba(240,160,40,.35)');r.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=r;x.fillRect(0,0,128,128);return c})()),transparent:true,depthWrite:false}));
+  sh.rotation.x=-Math.PI/2;sh.position.y=-.01;g.add(sh);
+  // bubbles
+  const BN=140,bub=new THREE.InstancedMesh(new THREE.SphereGeometry(.018,8,8),new THREE.MeshStandardMaterial({color:0xfff0c0,emissive:0x8a5a10,roughness:.2,transparent:true,opacity:.8}),BN);
+  const bd=[];for(let i=0;i<BN;i++)bd.push({a:Math.random()*6.28,r:Math.random(),y:.35+Math.random()*2.4,s:.004+Math.random()*.01});
+  g.add(bub);const M=new THREE.Matrix4();
+  // dust particles
+  const DN=400,dp=new Float32Array(DN*3);for(let i=0;i<DN;i++){dp[i*3]=(Math.random()-.5)*14;dp[i*3+1]=(Math.random()-.5)*9;dp[i*3+2]=(Math.random()-.5)*8-2}
+  const dg=new THREE.BufferGeometry();dg.setAttribute('position',new THREE.BufferAttribute(dp,3));
+  const dust=new THREE.Points(dg,new THREE.PointsMaterial({color:0xd9a447,size:.025,transparent:true,opacity:.6}));scene.add(dust);
+  // lights
+  const key=new THREE.SpotLight(0xffd59a,60,20,.5,.6);key.position.set(3,5,4);scene.add(key);
+  const rim=new THREE.PointLight(0xd8343f,30,12);rim.position.set(-3,1,-2);scene.add(rim);
+  const back=new THREE.PointLight(0xffa640,25,10);back.position.set(0,.5,-2.5);scene.add(back);
+
+  const st={level:.34,foam:0,spin:0,zoom:0};
+  function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<700?11.5:8.2;cam.updateProjectionMatrix()}
+  addEventListener('resize',resize);resize();
+  let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
+  const count=document.getElementById('count'),stateEl=document.getElementById('spState');
+  // pour timeline
+  const tl=gsap.timeline({delay:.4});
+  tl.from(g.scale,{x:.6,y:.6,z:.6,duration:1.6,ease:'expo.out'},0)
+    .from(g.rotation,{y:-2.5,duration:2.2,ease:'expo.out'},0)
+    .to(st,{level:2.45,duration:3.4,ease:'power2.inOut',onUpdate:()=>count.textContent=Math.round((st.level-.34)/(2.45-.34)*100)},.5)
+    .to(st,{foam:1,duration:1.4,ease:'back.out(1.6)'},3.1)
+    .call(()=>{stateEl.textContent='Готово · Prost!'})
+    .fromTo('#enter',{autoAlpha:0,y:20},{autoAlpha:1,y:0,duration:.8,ease:'expo.out'},'-=.4');
+  document.getElementById('enter').onclick=()=>{
+    tl.progress(1);
+    gsap.to(st,{zoom:1,duration:1.4,ease:'expo.in'});
+    gsap.to('#enter,.sp-ui',{autoAlpha:0,duration:.4});
+    gsap.delayedCall(1.05,()=>window.closeSplash());
+  };
+  const clock=new THREE.Clock();
+  (function loop(){if(window.SPLASH_DONE){renderer.dispose();return}requestAnimationFrame(loop);
+    const t=clock.getElapsedTime();
+    clip.constant=st.level-1.5;   // plane: -y + c >= 0  => y <= c (world)
+    const r=rAt(st.level)*.985;
+    surf.position.y=st.level;surf.scale.setScalar(r);
+    foam.position.y=st.level-.01;foam.scale.set(r*1.02,(.08+.32*st.foam)*Math.max(st.foam,.001),r*1.02);foam.visible=st.foam>.01;
+    for(let i=0;i<BN;i++){const b=bd[i];b.y+=b.s;if(b.y>st.level-.02)b.y=.36;const rr=rAt(b.y)*.85*b.r;
+      M.makeTranslation(Math.cos(b.a+t*.3)*rr,b.y,Math.sin(b.a+t*.3)*rr);bub.setMatrixAt(i,M)}bub.instanceMatrix.needsUpdate=true;
+    bub.visible=st.level>.5;
+    g.rotation.y+=.004;g.rotation.x+=((my*.25)-g.rotation.x)*.05;g.position.x+=((mx*.6)-g.position.x)*.05;
+    dust.rotation.y=t*.02;dust.position.y=Math.sin(t*.3)*.2;
+    // dive into the beer
+    const z=st.zoom;cam.position.y=.6+z*.6;cam.position.z=(innerWidth<700?11.5:8.2)*(1-z*.93);cam.fov=32+z*40;cam.updateProjectionMatrix();cam.lookAt(0,z*.5,0);
+    renderer.render(scene,cam)})();
+}
+</script>
+</body>
+</html>

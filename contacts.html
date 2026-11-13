@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Контакты — Варштайнер Форум</title>
+<meta name="description" content="Варштайнер Форум: Невский проспект, 120, Санкт-Петербург. Телефон +7 (812) 717-54-06.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="assets/style.css?v=7">
+<link rel="stylesheet" href="assets/extras.css?v=7">
+</head>
+<body>
+<div class="curtain"><b><span>Контакты</span></b></div>
+<main class="contact-grid">
+  <section class="c-info">
+    <div><div class="crumbs mono"><span>07</span><span>/</span><span>Контакты</span></div><h1 data-split>Невский,<br><span class="red">120</span></h1></div>
+    <div class="c-rows up">
+      <div class="c-row"><span class="mono">Адрес</span><div>Санкт-Петербург,<br>Невский проспект, 120, 1 этаж</div></div>
+      <div class="c-row"><span class="mono">Телефон</span><div><a href="tel:+78127175406" data-cursor="Звонок">+7 (812) 717-54-06</a></div></div>
+      <div class="c-row"><span class="mono">Часы</span><div>Ежедневно с 12:00</div></div>
+      <div class="c-row"><span class="mono">Соцсети</span><div><a href="https://vk.ru/clubwf" target="_blank" rel="noopener">ВКонтакте</a> · <a href="https://t.me/warsteiner_spb" target="_blank" rel="noopener">Telegram</a> · <a href="https://wa.me/79213480354" target="_blank" rel="noopener">WhatsApp</a></div></div>
+    </div>
+    <div class="up" style="display:grid;gap:10px">
+      <div class="route"><span class="m">М</span><div><b>«Площадь Восстания»</b><div class="mono" style="color:var(--mute)">~ 4 минуты пешком по Невскому</div></div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="https://yandex.ru/maps/org/varshtayner_forum/1098721240/" target="_blank" rel="noopener" data-cursor="Маршрут">Маршрут в Яндекс Картах ↗</a>
+        <a class="btn line-b" href="booking.html" data-cursor="Бронь">Забронировать</a>
+      </div>
+    </div>
+  </section>
+  <div id="map"></div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="assets/app.js?v=7"></script>
+<script src="assets/extras.js?v=7"></script>
+<script>
+const P=[59.930873,30.363695],metro=[59.9310,30.3606];
+const map=L.map('map',{zoomControl:false,scrollWheelZoom:false,attributionControl:true}).setView([59.9312,30.3570],15);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(map);
+L.control.zoom({position:'bottomright'}).addTo(map);
+L.marker(P,{icon:L.divIcon({className:'',html:'<div class="pin">W</div>',iconSize:[64,64],iconAnchor:[32,32]})}).addTo(map)
+ .bindPopup('<b>Варштайнер Форум</b><br>Невский пр., 120').openPopup();
+L.circleMarker(metro,{radius:7,color:'#d8343f',fillColor:'#d8343f',fillOpacity:1}).addTo(map).bindTooltip('м. Площадь Восстания',{direction:'top'});
+const route=L.polyline([metro,P],{color:'#c9a35a',weight:3,dashArray:'6 8'}).addTo(map);
+setTimeout(()=>map.flyTo([59.9310,30.3622],17,{duration:2.5}),900);
+</script>
+</body>
+</html>

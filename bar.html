@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Бар — Варштайнер Форум</title>
+<meta name="description" content="12 домашних настоек, Warsteiner и крафтовое пиво петербургских пивоварен.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=7">
+<link rel="stylesheet" href="assets/extras.css?v=7">
+</head>
+<body>
+<div class="curtain"><b><span>Бар</span></b></div>
+<main>
+  <section class="carousel-wrap" id="carWrap" data-cursor="Тяни">
+    <div class="car-top mono"><span>03 / Бар · Домашние настойки</span><button class="quiz-btn" id="quizOpen">🎯 Подобрать настойку</button></div>
+    <div class="cyl" id="cyl"></div>
+    <div class="car-ui">
+      <div><span class="mono brass" id="cNum">01 / 12</span><h2 id="cName">Мандарин<br>с розмарином</h2><span class="mono" style="color:var(--mute)">50 мл · 250 ₽</span></div>
+      <div class="ctrl"><button id="prev" aria-label="Назад">←</button><button id="next" aria-label="Вперёд">→</button></div>
+    </div>
+  </section>
+
+  <section class="taps">
+    <div class="pagehead" style="padding:0 0 40px;border:0">
+      <div><div class="crumbs mono"><span>На кранах и в бутылках</span></div><h1 data-split>Пиво</h1></div>
+      <div class="meta mono"><span>Warsteiner · с 1753 г. в Германии</span><span>Крафт Петербурга</span></div>
+    </div>
+    <div class="tapboard" id="taps"></div>
+  </section>
+
+  <section class="bar-split">
+    <div class="ph"><img src="img/bartender.jpg" alt="Бармен" data-parallax="8"></div>
+    <div class="tx">
+      <span class="mono">Сет-конструктор</span>
+      <h2 data-split>Соберите свою доску</h2>
+      <p>Выберите 4, 8 или все 12 настоек — бармен расставит их от мягких к самым ярким. Лучшая компания для рульки и колбасок.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,248,232,.3)">
+        <div style="padding:18px 0"><b class="disp" style="font-size:34px">4</b><div class="mono">850 ₽</div></div>
+        <div style="padding:18px 0 18px 18px;border-left:1px solid rgba(255,248,232,.3)"><b class="disp" style="font-size:34px">8</b><div class="mono">1650 ₽</div></div>
+        <div style="padding:18px 0 18px 18px;border-left:1px solid rgba(255,248,232,.3)"><b class="disp" style="font-size:34px">12</b><div class="mono">2500 ₽</div></div>
+      </div>
+      <a href="booking.html" class="btn light" style="align-self:start" data-cursor="Бронь">Забронировать вечер →</a>
+    </div>
+  </section>
+</main>
+<div class="quiz" id="quiz" role="dialog" aria-label="Подбор настойки"><div class="qbox"><button class="x" aria-label="Закрыть">✕</button><div id="qBody"></div></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/app.js?v=7"></script>
+<script src="assets/extras.js?v=7"></script>
+<script>
+const T=[["Мандарин с розмарином","#f39a2b","#ffd27a"],["Облепиха","#f5a312","#ffe08a"],["Сливочная ириска","#c98a4b","#f1d1a1"],["Яблоко-корица","#c6612b","#f3b37b"],
+ ["Малина на джине","#d23a5a","#ff9fb3"],["Вишнёвая","#8e1630","#d8506d"],["Клюквенная","#b3202c","#ff7a83"],["Чёрная смородина на джине","#4a1840","#a35392"],
+ ["Бородинская","#3a2414","#8b5e3c"],["Лимончелло","#e8d23a","#fff5a8"],["Перцовка","#a8471c","#e88a55"],["Хреновуха","#d9d2b8","#fffaf0"]];
+const cyl=document.getElementById('cyl'),N=T.length,step=360/N;
+const R=()=>innerWidth<=900?310:470;
+T.forEach(([n,a,b],i)=>cyl.insertAdjacentHTML('beforeend',`<div class="bottle" style="background:linear-gradient(160deg,${b},${a} 60%,${a})"><span class="n">${String(i+1).padStart(2,'0')}</span><h4>${n}</h4><span class="p">50 мл · 250 ₽</span></div>`));
+const bottles=[...cyl.children];
+function place(){bottles.forEach((b,i)=>b.style.transform=`rotateY(${i*step}deg) translateZ(${R()}px)`)}place();addEventListener('resize',place);
+const st={rot:0};let target=0;
+function update(){gsap.set(cyl,{rotateY:-st.rot,rotateX:-6});
+  const idx=((Math.round(st.rot/step)%N)+N)%N;
+  document.getElementById('cNum').textContent=String(idx+1).padStart(2,'0')+' / 12';
+  const nm=T[idx][0].split(' ');document.getElementById('cName').innerHTML=nm.length>1?nm[0]+'<br>'+nm.slice(1).join(' '):nm[0];
+  document.getElementById('carWrap').style.background=`radial-gradient(60% 60% at 50% 55%,${T[idx][1]}33,var(--ink) 70%)`;
+  bottles.forEach((b,i)=>{let d=Math.abs(((i*step-st.rot)%360+540)%360-180);b.style.opacity=gsap.utils.mapRange(0,180,1,.15,d)})}
+function go(to){target=to;gsap.to(st,{rot:target,duration:1.2,ease:'expo.out',onUpdate:update})}
+document.getElementById('next').onclick=()=>go(Math.round(target/step)*step+step);
+document.getElementById('prev').onclick=()=>go(Math.round(target/step)*step-step);
+/* drag */
+const wrap=document.getElementById('carWrap');let dx=null,start=0;
+wrap.addEventListener('pointerdown',e=>{if(e.target.closest('button')||e.button>0)return;dx=e.clientX;start=target;try{wrap.setPointerCapture(e.pointerId)}catch(_){}});
+wrap.addEventListener('lostpointercapture',()=>endDrag&&endDrag());
+addEventListener('pointermove',e=>{if(dx===null)return;if(e.pointerType==='mouse'&&e.buttons===0){endDrag();return}target=start-(e.clientX-dx)*.25;gsap.to(st,{rot:target,duration:.6,ease:'power3',onUpdate:update})});
+const endDrag=()=>{if(dx===null)return;dx=null;go(Math.round(target/step)*step)};
+addEventListener('pointerup',endDrag);addEventListener('pointercancel',endDrag);addEventListener('blur',endDrag);
+/* keyboard arrows */
+addEventListener('keydown',e=>{if(document.getElementById('quiz').classList.contains('open'))return;if(e.key==='ArrowRight')document.getElementById('next').click();if(e.key==='ArrowLeft')document.getElementById('prev').click()});
+/* auto spin while idle — paused while the pointer is over the carousel or the quiz is open */
+let idle,hover=false;wrap.addEventListener('pointerenter',()=>hover=true);wrap.addEventListener('pointerleave',()=>hover=false);
+const auto=()=>{clearInterval(idle);idle=setInterval(()=>{if(dx===null&&!hover&&!document.getElementById('quiz').classList.contains('open')&&!document.hidden)go(Math.round(target/step)*step+step)},3800)};auto();wrap.addEventListener('pointerdown',auto);
+function goTo(i){const curI=Math.round(target/step);let d=((i-curI)%N+N)%N;if(d>N/2)d-=N;go((curI+d)*step)}
+update();
+if(!APP.reduce)gsap.from(bottles,{y:200,opacity:0,stagger:.05,duration:1.4,ease:'expo.out',delay:.6});
+
+/* taps */
+const B=[["Warsteiner Premium","Германия · 4,8% · пилснер","0,5 л",690,"#e1a72e"],["Warsteiner Premium","Германия · 4,8% · пилснер","0,3 л",570,"#e1a72e"],
+ ["Фестхаус Вайсбир","пшеничное нефильтр. · 5,3%","0,5 л",510,"#f0c35a"],["Балтика Стаут","ирландский стаут · 4,2%","0,5 л",410,"#3a1f12"],
+ ["«Синяя Борода» Дюббель","Василеостровская · 8%","0,75 л",790,"#7a3b16"],["«Чехов» вишнёвый эль","Василеостровская · 7,3%","0,75 л",790,"#8e1630"],
+ ["«Атомная прачечная» IPA","Джоус · 7% · 101 IBU","0,5 л",650,"#d98a1e"],["Сидр яблочный","Василеостровская · 4,7%","0,75 л",650,"#e8cf6a"]];
+document.getElementById('taps').innerHTML=B.map(([n,m,v,p,c],i)=>`<div class="tap" style="--fill:${c}"><span class="mono meta">Кран ${String(i+1).padStart(2,'0')} · ${v}</span><div><h4>${n}</h4><p class="mono meta" style="margin-top:8px">${m}</p></div><span class="pr">${p} ₽</span></div>`).join('');
+document.querySelectorAll('.tap').forEach(t=>{const c=getComputedStyle(t).getPropertyValue('--fill');if(['#3a1f12','#7a3b16','#8e1630'].includes(c.trim()))t.addEventListener('mouseenter',()=>t.style.color='var(--foam)'),t.addEventListener('mouseleave',()=>t.style.color='')});
+/* ---------- quiz «Подобрать настойку» ---------- */
+const TAGS=[["sweet","fruit","light"],["sour","berry","light"],["sweet","odd","warm"],["sweet","fruit","warm"],["sweet","berry","light"],["sweet","berry","warm"],
+ ["sour","berry","light"],["sour","berry","warm"],["spicy","odd","warm"],["sour","fruit","light"],["spicy","odd","warm"],["spicy","odd","light"]];
+const NOTE=["Цитрус и хвойная свежесть розмарина — светло и празднично.","Яркая кислинка и витаминный заряд.","Как жидкая карамель — десерт в рюмке.","Тёплый вкус бабушкиного пирога.",
+ "Сладкая малина и можжевеловый джин.","Насыщенная вишня, мягкая и глубокая.","Северная кислинка, отлично к мясу.","Тёмная ягода и джин — для ценителей.",
+ "Хлебная, с кориандром — как бородинский хлеб.","Солнечный лимон, сладко и бодро.","Огонь! Для тех, кто любит погорячее.","Классика к холодцу и салу — бодрит."];
+const QS=[["Какой вкус любите?",[["🍯","Сладкое","sweet"],["🍋","С кислинкой","sour"],["🌶","Пряное и острое","spicy"]]],
+ ["Что вам ближе?",[["🍊","Фрукты","fruit"],["🍒","Ягоды","berry"],["🥖","Что-то необычное","odd"]]],
+ ["Какое настроение?",[["☀️","Лёгкое и свежее","light"],["🔥","Согревающее","warm"]]]];
+const quiz=document.getElementById('quiz'),qb=document.getElementById('qBody');let ans=[];
+function qStep(){if(ans.length===QS.length)return qResult();const [title,opts]=QS[ans.length];
+  qb.innerHTML=`<div class="qdots">${QS.map((_,i)=>`<i class="${i<=ans.length?'on':''}"></i>`).join('')}</div><h3>${title}</h3><div class="qopts">${opts.map(o=>`<button data-v="${o[2]}"><i>${o[0]}</i>${o[1]}</button>`).join('')}</div>`;
+  qb.querySelectorAll('.qopts button').forEach(b=>b.onclick=()=>{ans.push(b.dataset.v);qStep()});
+  if(!APP.reduce)gsap.from(qb.children,{y:20,opacity:0,stagger:.06,duration:.5,ease:'expo.out'})}
+function qResult(){const sc=TAGS.map(t=>t.filter(x=>ans.includes(x)).length);const best=Math.max(...sc);const pool=sc.map((s,i)=>s===best?i:-1).filter(i=>i>=0);const i=pool[Math.floor(Math.random()*pool.length)];
+  qb.innerHTML=`<div class="qres"><span class="mono" style="color:var(--red)">Ваша настойка</span><div class="bt" style="margin-top:18px;background:linear-gradient(160deg,${T[i][2]},${T[i][1]} 60%)"></div><h3>${T[i][0]}</h3><p>${NOTE[i]}<br>50 мл · 250 ₽</p>
+   <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" id="qShow">Показать на полке</button><button class="btn line-b" id="qAgain" style="color:var(--ink)">Ещё раз</button></div></div>`;
+  if(!APP.reduce)gsap.from('.qres .bt',{scale:0,rotate:-30,duration:.9,ease:'back.out(2)'});APP.prost(18);
+  document.getElementById('qShow').onclick=()=>{closeQuiz();setTimeout(()=>goTo(i),300)};document.getElementById('qAgain').onclick=()=>{ans=[];qStep()}}
+function closeQuiz(){quiz.classList.remove('open');APP.lock('quiz',false)}
+document.getElementById('quizOpen').onclick=()=>{ans=[];qStep();quiz.classList.add('open');APP.lock('quiz',true)};
+quiz.querySelector('.x').onclick=closeQuiz;quiz.addEventListener('click',e=>{if(e.target===quiz)closeQuiz()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&quiz.classList.contains('open'))closeQuiz()});
+
+if(!APP.reduce)gsap.from('.tap',{y:60,opacity:0,stagger:.06,duration:1,ease:'expo.out',scrollTrigger:{trigger:'#taps',start:'top 80%'}});
+</script>
+</body>
+</html>
